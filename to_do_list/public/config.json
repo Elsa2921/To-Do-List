@@ -1,0 +1,4 @@
+{
+    "REACT_APP_API_URI":"http://localhost:80/toDoList_backend/",
+    "GOOGLE_CLIENT_ID": "100822934550-23epl6p3q8pc7m5rsh7krq89k6e11o5n.apps.googleusercontent.com"
+}

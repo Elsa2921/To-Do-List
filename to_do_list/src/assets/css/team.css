@@ -1,0 +1,127 @@
+:root{
+    --white : #eff1f3;
+    --light-blue: #3e92cc;
+    --dark-blue: rgb(34, 56, 67);
+    --blue: #5eade8;
+    --orange: rgb(220, 104, 27);
+}
+
+
+.team_box{
+    border: 2px solid var(--orange);
+    border-radius: 20px;
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.team_cont h2{
+    font-size: clamp(18px , 1.8vw ,32px);
+    color: var(--orange);
+}
+
+.team_cont label{
+    cursor: pointer;
+    color: var(--blue);
+}
+
+.team_cont span{
+    color: var(--blue);
+}
+.team_cont h4{
+    font-size: clamp(16px , 1.3vw ,26px);
+    color: var(--light-blue);
+}
+
+
+
+.other_user_box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 5px;
+    border-bottom: 1px solid gray;
+}
+
+.other_user_box .fa-user, .team_box .fa-user{
+    width: 45px;
+    height: 45px;
+    font-size: clamp(15px ,1.3vw ,21px);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--orange);
+}
+.team_box .fa-user{
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+}
+
+
+
+.team_cont h3{
+    font-size: clamp(16px ,1.5vw ,24px);
+    color: var(--orange);
+}
+
+
+.team_cont h4{
+    font-size: clamp(15px ,1.4vw ,18px);
+}
+
+.team_box h4{
+    font-size: clamp(14px ,1.4vw ,17px);
+}
+
+.other_user_box button {
+    padding: 7px 15px;
+}
+
+
+.team_cont button i{
+    pointer-events: none;
+}
+
+
+.team_box .fa-trash{
+    font-size: clamp(15px ,1.3vw ,21px);
+    color: var(--dark-blue);
+    cursor: pointer;
+}
+
+
+
+
+.team-tasks{
+    padding: 15px;
+    background-color: var(--light-blue);
+    border-radius: 10px;
+}
+
+.team-tasks p{
+    color: var(--white);
+}
+
+.team-tasks span{
+    color: #bab8b8;
+}
+
+
+
+
+.team-tasks h4{
+    color: white;
+}
+@media(max-width: 768px){
+    .team_box{
+        width: 100%;
+    }
+}

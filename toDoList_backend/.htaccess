@@ -1,0 +1,8 @@
+RewriteEngine On
+
+
+RewriteRule ^base/ - [F,L]
+RewriteRule ^register/ - [F,L]
+RewriteRule ^pages/ - [F,L]
+RewriteRule ^mail/ - [F,L]
+RewriteRule ^vendor/ - [F,L]

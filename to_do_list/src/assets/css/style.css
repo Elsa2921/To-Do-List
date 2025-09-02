@@ -1,0 +1,172 @@
+:root{
+    --white : #eff1f3;
+    --light-blue: #3e92cc;
+    --dark-blue: rgb(34, 56, 67);
+    --blue: #5eade8;
+    --orange: rgb(220, 104, 27);
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.dark{
+    background-color: var(--dark-blue);
+}
+.navbar-cont-fl{
+    position: relative;
+}
+
+.navbar-cont i{
+    font-size: clamp(17px ,2vw ,28px);
+    cursor: pointer;
+    color: var(--light-blue);
+}
+
+.navbar-cont h2{
+    font-size: clamp(17px ,2vw ,29px);
+    pointer-events: none;
+    color: var(--light-blue);
+}
+
+.sideBar{
+    position: absolute;
+    width: 400px;
+    height: 100vh;
+    background-color: var(--light-blue);
+    top: 0;
+    left: -650px;
+    transition: .6s ease;
+    z-index: 100;
+}
+
+.sideBarOpen{
+    position: fixed;
+    left: 0;
+}
+
+.sideBar .fa-close{
+    font-size: clamp(17px ,2vw ,24px);
+    cursor: pointer;
+}
+
+.sideBar h2, .sideBar i{
+    font-size: clamp(19px ,2.5vw ,31px);
+    color: var(--white);
+}
+
+.sideBar h2{
+    padding-bottom: 30px;
+    border-bottom: 3px solid var(--white);
+}
+
+a[href^="/signUp"],
+a[href^="/profile"]{
+    display: none;
+}
+
+
+li{
+    list-style: none;
+}
+
+a,
+.sideBar a
+{
+    text-decoration: none;
+}
+
+
+.sideBar ul{
+    padding-left: 20px;
+}
+.navbar-cont-fl a{
+    text-decoration: none;
+}
+.sideBar li, 
+.sideBar a{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    font-size: clamp(14px ,1.4vw ,18px);
+}
+
+.sideBar .active{
+    color: var(--dark-blue);
+}
+
+.sideBar li i{
+    font-size: clamp(14px ,1.4vw ,19px);
+}
+
+.sideBar li{
+    padding: 8px 10px;
+    transition: .4s ease;    
+    border-bottom: 2px solid transparent;
+}
+
+
+.sideBar li:hover{
+    border-color:var(--white);
+}
+
+.pass_input_div{
+    position: relative;
+}
+
+
+.red_btn{
+    background-color: var(--orange);
+}
+
+.pass_input_div i{
+    position: absolute;
+    right: 0;
+    color: white;
+    top: 30%;
+    cursor: pointer;
+}
+
+.pass_input_div input[type="password"]::-ms-reveal{
+    display: none;
+}
+
+
+@media(max-width:768px){
+    .sideBar{
+        
+        width: 300px;
+    }
+
+    .sideBar h2{
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--white);
+    }
+
+
+    .sideBar li{
+        padding: 5px 8px;
+        border-bottom: 1px solid transparent;
+    }
+}
+
+
+
+
+@media(max-width:576px){
+    .sideBar{
+        width: 230px;
+    }
+
+
+    .sideBar li{
+        padding:0;
+        padding-bottom: 6px;
+    }
+}

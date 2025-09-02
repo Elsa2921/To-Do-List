@@ -1,0 +1,58 @@
+:root{
+    --white : #eff1f3;
+    --light-blue: #3e92cc;
+    --dark-blue: rgb(34, 56, 67);
+    --blue: #5eade8;
+    --orange: rgb(220, 104, 27);
+}
+
+
+
+
+.auth-cont{
+    height: 100vh;
+    background-color: var(--light-blue);
+}
+
+
+.auth-div{
+    padding: 30px;
+    width: 400px;
+    border: 2px solid var(--white);
+    border-radius: 20px;
+}
+
+.auth-div input{
+    width: 300px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--white);
+    color: white;
+    filter: brightness(100%);
+}
+
+.auth-div button{
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    font-size: clamp(13px ,1vw ,17px);
+}
+
+
+@media(max-width:576px){
+    .auth-div{
+        padding: 25px 20px;
+        width: 100%;
+        border: 2px solid var(--white);
+        border-radius: 20px;
+    }
+    .auth-div form{
+        width: 100%;
+    }
+    
+    .auth-div input{
+        width: 100%;
+        background-color: transparent;
+        border-bottom: 1px solid var(--white);
+        color: white;
+        filter: brightness(100%);
+    }
+}

@@ -1,0 +1,27 @@
+# -------------------
+# React / Node
+# -------------------
+to_do_list/node_modules/       # Node dependencies
+to_do_list/build/              # Production build
+
+# Env files
+to_do_list/.env*               # All frontend env files
+
+# npm / yarn logs
+npm-debug.log*
+yarn-debug.log*
+
+# -------------------
+# PHP
+# -------------------
+toDoList_backend/vendor/       # Composer dependencies
+toDoList_backend/.env          # Backend environment file
+*.log                          # Any PHP log files
+
+# -------------------
+# System / IDE junk
+# -------------------
+.DS_Store                       # macOS system file
+Thumbs.db                       # Windows system file
+.idea/                          # PhpStorm / JetBrains IDE
+.vscode/                        # VS Code
