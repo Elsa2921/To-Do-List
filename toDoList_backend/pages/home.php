@@ -1,7 +1,4 @@
 <?php
-require_once __DIR__ . '/../checkers/home.php';
-
-
 function deleteAccount(){
     $id = $_SESSION['toDo_id'] ?? '';
     $email = $_SESSION['toDo_email'] ?? '';
@@ -27,18 +24,11 @@ function deleteAccount(){
 function addTask($task,$category){
     $id = $_SESSION['toDo_id'] ?? '';
     if(!empty($id)){
-        // $checker = taskChecker($id,$task,$category);
-        // if($checker){
-        //     echo json_encode(['error'=>"task exists!"]);
-
-        // }
-        // else{
-            global $class;
-            $class->query("INSERT INTO tasks (user_id,category,task) 
-            VALUES (:user_id, :category, :task)",
-        [':user_id'=>$id, ':category'=>$category, ':task'=>$task]);
-            echo json_encode(['message'=>"ok"]);
-        // }
+        global $class;
+        $class->query("INSERT INTO tasks (user_id,category,task) 
+        VALUES (:user_id, :category, :task)",
+    [':user_id'=>$id, ':category'=>$category, ':task'=>$task]);
+        echo json_encode(['message'=>"ok"]);
     }
     else{
         echo json_encode(['error'=>"you can't add a task without an account"]);
