@@ -10,7 +10,7 @@ $json = json_decode(file_get_contents(__DIR__.'/../categories.json'),true);
 
 
 function googleAuth($token){
-    $client = new Google_Client(['client_id'=> '100822934550-23epl6p3q8pc7m5rsh7krq89k6e11o5n.apps.googleusercontent.com']);
+    $client = new Google_Client(['client_id'=> $_ENV['GOOGLE_CLIENT_ID']]);
     $payload = $client->verifyIdToken($token);
     if($payload){
         $checker = googleAuthChecker($payload['email']);

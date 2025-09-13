@@ -1,11 +1,11 @@
 # -------------------
 # React / Node
 # -------------------
-to_do_list/node_modules/       # Node dependencies
-to_do_list/build/              # Production build
+to_do_list/node_modules/   
+to_do_list/build/             
 
 # Env files
-to_do_list/.env*               # All frontend env files
+to_do_list/.env*        
 
 # npm / yarn logs
 npm-debug.log*
@@ -14,9 +14,9 @@ yarn-debug.log*
 # -------------------
 # PHP
 # -------------------
-toDoList_backend/vendor/       # Composer dependencies
-toDoList_backend/.env          # Backend environment file
-*.log                          # Any PHP log files
+toDoList_backend/vendor/    
+toDoList_backend/.env*      
+*.log                         
 
 # -------------------
 # System / IDE junk
