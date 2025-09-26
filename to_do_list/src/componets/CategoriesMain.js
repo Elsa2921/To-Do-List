@@ -10,13 +10,18 @@ function CategoriesMain(props) {
 
     const getInfo = async ()=>{
         try{
+            setData([])
             const res = await axios.get(link ,{
                 'params':{
                     'categories':true
                 },
                 withCredentials:true
             })
-            setData(res.data);
+            if(res.status === 200){
+                if(res.data &&  Array.isArray(res.data)){
+                    setData(res.data);
+                }
+            }
         }
         catch(error){
             console.error(error)
@@ -50,17 +55,20 @@ function CategoriesMain(props) {
 
         try{
             const category = document.getElementById('category_input').value;
-            const res = await axios.post(link,
-                {'addCategory':category},
-                {withCredentials:true});
-            const data =  res.data;
-            if(data['error']){
-                alert(data['error'])
+            if(category !== '' && category.trim()!==''){
+                const res = await axios.post(link,
+                    {'addCategory':category},
+                    {withCredentials:true});
+                const data =  res.data;
+                if(data['error']){
+                    alert(data['error'])
+                }
+                else{
+                    document.getElementById('category_input').value=''
+                    getInfo();
+                }
             }
-            else{
-                document.getElementById('category_input').value=''
-                getInfo();
-            }
+            
 
         }catch(error){
             console.error(error)
@@ -80,7 +88,7 @@ function CategoriesMain(props) {
                         <div className='w-100 text-end'>
                             <i className="fa fa-trash delete" aria-hidden="true" data-id={element['id']} onClick={handleDelete}></i>
                         </div>
-                        <h2>{element['categorie']}</h2>
+                        <h2>{element['category']}</h2>
                     </div>
                 ))}
             </div>

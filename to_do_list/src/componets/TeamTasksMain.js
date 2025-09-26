@@ -198,16 +198,14 @@ function TeamTasksMain(props) {
                 <div className='pt-3 w-100 d-flex justify-content-between align-items-start gap-4 flex-wrap'>
                     <div className='team_box p-4'>
                         <h3>Tasks </h3>     
-                        {tasks.map((element)=>(
+                        {tasks?.map((element)=>(
                             <div key={element.id} className='team-tasks d-flex w-100 justify-content-between aplign-items-center gap-3 flex-wrap'>
                                 <div className='w-100 d-flex justify-content-between align-items-center  flex-wrap gap-3'>
                                     <div className='d-flex justify-content-start align-items-center gap-4'>
                                         <i className='fa fa-user'></i>
-                                        <h4>{element.members.username}</h4>
+                                        <h4>{element?.username}</h4>
                                     </div>
-                                           
-                                    
-                                    
+
                                     <i className='fa fa-trash' data-id={element.id} onClick={handleDeleteTask}></i>
                                 </div>
                                 <p className='text_task'>{element.task}</p>
@@ -219,12 +217,12 @@ function TeamTasksMain(props) {
 
                     <div className='team_box p-4'>
                         <h3>Done <i className='fa fa-check'></i></h3>
-                        {doneT.map((element)=>(
+                        {doneT?.map((element)=>(
                             <div key={element.id} className='team-tasks d-flex w-100 justify-content-between aplign-items-center gap-3 flex-wrap'>
                                 <div className='w-100 d-flex justify-content-between align-items-center  flex-wrap gap-3'>
                                     <div className='d-flex justify-content-start align-items-center gap-4'>
                                         <i className='fa fa-user'></i>
-                                        <h4>{element.members.username}</h4>
+                                        <h4>{element.username}</h4>
                                     </div>
                                     <h6>Completed: {element.done_date}</h6>
                                 </div>

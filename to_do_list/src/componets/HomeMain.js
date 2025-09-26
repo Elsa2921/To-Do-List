@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios'
 import { getAppConfig } from '../config';
 function HomeMain(props) {
-    const [category,setCategory] = useState(''); 
+    const [category,setCategory] = useState(null); 
     const [data,setData] = useState([]);
     const [tasks,setTasks] = useState([]);
     const [done, setDone] = useState([]);
@@ -22,20 +22,20 @@ function HomeMain(props) {
                 withCredentials:true
                 
             })
-            if(res.data[0]){
-                if(res.data[0]['tasks']){
-                    setTasks(res.data[0]['tasks'])
+            if(res.data['all_tasks']){
+                if(res.data['all_tasks']['tasks']){
+                    setTasks(res.data['all_tasks']['tasks'])
                 }
-                if(res.data[0]['done']){
-                    setDone(res.data[0]['done']);
+                if(res.data['all_tasks']['done']){
+                    setDone(res.data['all_tasks']['done']);
                 }
             }
-            if(res.data['categories']){
+            if(res.data['categories'] && res.data['categories'].length !== 0){
                 let c= res.data['categories']
                 
-                if(category.length===0){
-                    setCategory(c[0]['categorie'])
-                    sessionStorage.setItem('category',c[0]['categorie'])
+                if(category===0){
+                    setCategory(c[0]['category'])
+                    sessionStorage.setItem('category',c[0]['category_id'])
                 }
                 setData(c)
             }
@@ -85,20 +85,23 @@ function HomeMain(props) {
         try{
            
             const task = e.target.querySelector('input').value
-            const res = await axios.post(link,
-                {
-                    task,
-                    category
-                },
-            {withCredentials: true})
-            const data = res.data
-            if(data['error']){
-                alert(data['error'])
+            if(task!== '' && task.trim()!==''){
+                const res = await axios.post(link,
+                    {
+                        task,
+                        category : sessionStorage.getItem('category')
+                    },
+                {withCredentials: true})
+                const data = res.data
+                if(data['error']){
+                    alert(data['error'])
+                }
+                else{
+                    e.target.querySelector('input').value = ''
+                    handleReload();
+                }
             }
-            else{
-                e.target.querySelector('input').value = ''
-                handleReload();
-            }
+            
         }catch(error){
             console.error(error)
         }
@@ -106,7 +109,8 @@ function HomeMain(props) {
 
 
     const handleSelect = (e)=>{
-        setCategory(e.target.value)
+        const c =  data.find(el => el['category_id'] === Number(e.target.value))?.category
+        setCategory(c)
         sessionStorage.setItem('category',e.target.value)
         setTasks([])
         setDone([])
@@ -159,8 +163,10 @@ function HomeMain(props) {
             <div className='container d-flex justify-content-start align-items-start gap-5 flex-wrap'>
                 
                 <select onChange={handleSelect}>
-                    {data.map((element)=>(
-                        <option  key={element['categorie']} value={element['categorie']}>{element['categorie']}</option>
+                    {data?.map((element)=>(
+                        <option  key={element['category_id']} value={element['category_id']}>
+                            {element['category']}
+                        </option>
                     ))}  
                 </select>
 

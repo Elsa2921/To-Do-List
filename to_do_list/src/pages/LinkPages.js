@@ -21,28 +21,43 @@ function LinkPages(props) {
                 withCredentials:true
             });
             const data = res.data
+            let body = document.getElementsByTagName('body')[0];
+            let check = document.getElementById('themeCheck')
             if(data['status'] && data['status']===200){
                 if(!data['profile']){
                     
                     document.querySelector('a[href="/signUp"]').style.display = 'block'
-                    
+                    if(sessionStorage.getItem('theme')){
+                        const theme = parseInt(sessionStorage.getItem('theme'));
+                        if(theme){
+                            
+                            body.classList.add('dark')
+                            check.checked = true
+                        }
+                        else{
+                            body.classList.remove('dark')
+                            check.checked = false;
+                            
+                        }
+
+                    }
                 }
                 else{   
                     document.querySelector('a[href="/profile"]').style.display = 'block'
                     setName(data['profile']['other']);
+                     if(!data['profile']['theme']){
+                        body.classList.remove('dark')
+                        check.checked = false;
+                    }
+                    else{
+                        body.classList.add('dark')
+                        check.checked = true
+                    }
                 }
             }
 
-            const body = document.getElementsByTagName('body')[0];
-                const check = document.getElementById('themeCheck')
-                if(!data['profile']['theme']){
-                    body.classList.remove('dark')
-                    check.checked = false;
-                }
-                else{
-                    body.classList.add('dark')
-                    check.checked = true
-                }
+            
+               
            
 
         }catch(error){
@@ -72,10 +87,13 @@ function LinkPages(props) {
                 console.error(error)
             }
         
+        
         if(check){
+            sessionStorage.setItem('theme',1)
             body.classList.add('dark')
         }   
         else{
+            sessionStorage.setItem('theme',0)
             body.classList.remove('dark')
         }
     }
