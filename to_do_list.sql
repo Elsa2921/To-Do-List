@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2025 at 06:37 PM
+-- Generation Time: Sep 26, 2025 at 06:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -97,13 +97,6 @@ CREATE TABLE `team_task_name` (
   `deadline` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `team_task_name`
---
-
-INSERT INTO `team_task_name` (`id`, `user_id`, `name`, `deadline`) VALUES
-(1, 4, 'wegwge', '2025-08-20');
-
 -- --------------------------------------------------------
 
 --
@@ -121,14 +114,6 @@ CREATE TABLE `users` (
   `exp_date` timestamp NULL DEFAULT NULL,
   `verified` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `theme`, `type`, `token`, `exp_date`, `verified`) VALUES
-(2, 'Maria', 'nazeni@gmail.com', '$2y$10$XK7WbB5sbakO1TQwmQ8bheYZ5mBODKL4im7DGwJnllvUhHCcz.Pda', '1', '2', '3d41f211314d29d2ad556d13d49c4722', '2025-09-22 08:40:11', '1'),
-(4, 'user_bhlvhwu', 'simonyanelsa@gmail.com', NULL, '1', '1', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
