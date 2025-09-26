@@ -162,7 +162,8 @@ function HomeMain(props) {
         <div className='container-fluid pt-4 pt-md-5'>
             <div className='container d-flex justify-content-start align-items-start gap-5 flex-wrap'>
                 
-                <select onChange={handleSelect}>
+                <select defaultValue={'a0'} onChange={handleSelect}>
+                    <option value={'a0'} disabled>Select category</option>
                     {data?.map((element)=>(
                         <option  key={element['category_id']} value={element['category_id']}>
                             {element['category']}
