@@ -5,7 +5,9 @@ require_once __DIR__ .'/../base/base.php';
 function googleAuthChecker($email){
     global $class;
     $pdo = $class->connect();
-    $stmt = $pdo->prepare("SELECT id,theme,type,username FROM users WHERE email=:email");
+    $stmt = $pdo->prepare("SELECT id,theme,type,username 
+    FROM users 
+    WHERE email=:email");
     $stmt->execute([':email'=>$email]);
     $flag = false;
     if($stmt->rowCount()>0){
@@ -19,7 +21,9 @@ function googleAuthChecker($email){
 function AuthChecker($email,$password){
     global $class;
     $pdo = $class->connect();
-    $stmt = $pdo->prepare("SELECT id,theme,password,type FROM users WHERE email=:email");
+    $stmt = $pdo->prepare("SELECT id,theme,password,type 
+    FROM users 
+    WHERE email=:email");
     $stmt->execute([':email'=>$email]);
     $flag = false;
     if($stmt->rowCount()>0){
@@ -53,7 +57,10 @@ function AuthChecker($email,$password){
 function verified_checker($email){
     global $class;
     $pdo = $class->connect();
-    $stmt = $pdo->prepare("SELECT id,theme,password,verified,username FROM users WHERE email=:email AND verified=:v");
+    $stmt = $pdo->prepare("SELECT id,theme,password,verified,username 
+    FROM users 
+    WHERE email=:email 
+        AND verified=:v");
     $stmt->execute([':email'=>$email,':v'=>1]);
     $flag = 5;
     if($stmt->rowCount()>0){
@@ -85,7 +92,9 @@ function usernameAuthChecker($username){
 function emailChecker($email){
     global $class;
     $pdo = $class->connect();
-    $stmt = $pdo->prepare("SELECT type  FROM users WHERE email=:email");
+    $stmt = $pdo->prepare("SELECT type  
+    FROM users 
+    WHERE email=:email");
     $stmt->execute([':email'=>$email]);
     $flag = false;
     if($stmt->rowCount()>0){
@@ -102,7 +111,9 @@ function emailChecker($email){
 function tokenChecker($email){
     global $class;
     $pdo = $class->connect();
-    $stmt = $pdo->prepare("SELECT token FROM users WHERE email=:email");
+    $stmt = $pdo->prepare("SELECT token 
+    FROM users 
+    WHERE email=:email");
     $stmt->execute([':email'=>$email]);
     $flag = false;
     if($stmt->rowCount()>0){

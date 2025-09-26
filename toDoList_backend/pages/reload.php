@@ -43,9 +43,9 @@ function homeReload($category){
         }
         else{
             // $category = homeReloadSelect($id);
-            $c_data =  getTasks($select[0]['categorie'],$id);
+            $c_data =  getTasks($select[0]['category_id'],$id);
         }
-        echo json_encode(['status'=>200, 'categories'=>$select,$c_data]);
+        echo json_encode(['status'=>200, 'categories'=>$select,'all_tasks'=>$c_data]);
     }
     else{
 
@@ -141,9 +141,7 @@ function pendingTaskReload(){
     $data = [];
     if(!empty($id)){
         $projects = getMyTeamTasks($id);
-        $projects_name = getTeamTaskNames($projects);
-        $creator_name = getProjectCreatorName($projects_name);
-        $data['projects'] = $creator_name;
+        $data['projects'] = $projects;
         
     }
     echo json_encode($data);

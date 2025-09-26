@@ -31,7 +31,8 @@ function googleAuth($token){
             global $json;
             $pdo = $class->connect();
             $username = usernameGenerator($pdo);
-            $stmt =$pdo->prepare("INSERT INTO users (email, type,username) VALUES (:email, :type,:username)");
+            $stmt =$pdo->prepare("INSERT INTO users (email, type,username) 
+            VALUES (:email, :type,:username)");
             $stmt->execute([':email'=>$payload['email'], ':type'=>1,':username'=>$username]);
             $id = $pdo->lastInsertId();
             addCategories($id,$json);            
@@ -117,9 +118,17 @@ function signUp($username, $password,$email){
                 $expDate = add_expDate();
                 $pdo = $class->connect();
                 $hash = password_hash($password,PASSWORD_BCRYPT);
-                $stmt =$pdo->prepare("INSERT INTO users (username, password, type,email, token, verified, exp_date) 
+                $stmt =$pdo->prepare("INSERT INTO users 
+                (username, password, type,email, token, verified, exp_date) 
                 VALUES (:username, :password, :type, :email, :token, :verified, :exp_date)");
-                $stmt->execute([':username'=>$username, ':password'=>$hash, ':type'=>2, ':email'=>$email, ':token'=>$token,':verified'=>0, ':exp_date'=>$expDate]);
+                $stmt->execute([
+                    ':username'=>$username, 
+                    ':password'=>$hash, 
+                    ':type'=>2,
+                    ':email'=>$email,
+                    ':token'=>$token,
+                    ':verified'=>0,
+                    ':exp_date'=>$expDate]);
                 $id = $pdo->lastInsertId();
                 mailer($token,$email,$_ENV['TO_DO_EMAIL']);
                 addCategories($id,$json);
