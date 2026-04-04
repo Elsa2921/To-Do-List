@@ -89,8 +89,8 @@ function Login(props) {
     return (
         
         <div className='container-fluid pt-5 auth-cont'>
-            <div className='pt-5 container d-flex justify-content-center align-items-center'>
-                <div className='d-flex justify-content-center align-items-center flex-column gap-4 auth-div'>
+            <div className='pt-2 container d-flex justify-content-center align-items-center'>
+                <div className='d-flex justify-content-center align-items-center flex-column gap-3 auth-div'>
                     <h3>Login</h3>
                     <GoogleLogin
 
@@ -98,16 +98,25 @@ function Login(props) {
                         onError={handleError} 
                     />
                     <span>or</span>
-                    <form onSubmit={handleSubmit} className='d-flex justify-content-center align-items-center flex-column gap-4'>
-                        <input id='email' type='email' placeholder='email' required/>
-                        <div className='pass_input_div w-100'>
-                            <input id='password' type='password' placeholder='password' required />
-                            <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                    <form onSubmit={handleSubmit} className='d-flex  justify-content-center auth-form align-items-start flex-column gap-4'>
+                        <div>
+                            <label htmlFor='email'>Email</label>
+                            <input id='email' type='email' placeholder='you@example.com' required/>
+                        </div>
+                        <div>
+                            <label htmlFor='password'>Password</label>
+                            <div className='pass_input_div w-100'>
+                                <input id='password' type='password' placeholder='password' required />
+                                <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                            </div>
                         </div>
                         <button type='submit'>Login</button>
                     </form>
-                    <Link to={'/email'} style={{color: 'white'}}>Forgot password?</Link>
-                    <Link to={'/signUp'} style={{color: 'white',display:'flex'}}>Don't have an account ?</Link>
+                    <div className='auth-a'>
+                        <Link to={'/email'}>Forgot password?</Link>
+                        <Link to={'/signUp'} style={{display:'flex'}}>Don't have an account ?</Link>
+                    </div>
+                    
                 </div>
                 
             </div>

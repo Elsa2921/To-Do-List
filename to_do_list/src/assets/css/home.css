@@ -19,28 +19,7 @@
 }
 
 
-input{
-    padding: 8px 8px;
-    background-color: var(--dark-blue);
-    filter: brightness(70%);
-    border: none;
-    color: var(--white);
-    outline: none;
-}
 
-
-
-input::placeholder{
-    color: white;
-}
-button{
-    border: none;
-    padding: 7px 18px;
-    background-color: var(--light-blue);
-    color: var(--white);
-    font-size: clamp(14px ,1vw ,17px);
-    border-radius: 10px;
-}
 
 
 .tasks{
@@ -149,7 +128,17 @@ button{
     color: rgb(146, 144, 144);
 }
 
+button{
+    border: none;
+    padding: 9px 18px;
+    background-color: var(--orange_);
+    color: var(--white);
+    font-size: clamp(14px ,1vw ,15px);
+    font-weight: 500;
+    width: 100%;
+    border-radius: 8px;
 
+}
 .task_header{
     width: 100%;
     color: var(--blue);

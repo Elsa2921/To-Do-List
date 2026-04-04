@@ -1,9 +1,12 @@
 :root{
-    --white : #eff1f3;
+    --smoke : rgb(244,242,238);
+    --white: white;
     --light-blue: #3e92cc;
+    --light-orange: rgb(251,244,242);
     --dark-blue: rgb(34, 56, 67);
     --blue: #5eade8;
-    --orange: rgb(220, 104, 27);
+    --orange_: rgb(224,122,95);
+    --gray_: rgb(124,124,124);
 }
 
 
@@ -12,6 +15,68 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+
+/* background colors */
+
+.bg-orange{
+    background-color: var(--orange_);
+}
+.bg-light-orange{
+    background-color: var(--light-orange);
+}
+
+.bg-smoke{
+    background-color: var(--smoke);
+}
+
+.bg-white{
+    background-color: var(--white);
+}
+
+
+
+/* text colors */
+
+.text-gray{
+    color: var(--gray_);
+}
+
+.text-orange{
+    color: var(--orange_);
+}
+.text-light-orange{
+    color: var(--light-orange);
+}
+
+.text-smoke{
+    color: var(--smoke);
+}
+
+.text-white{
+    color: var(--white);
+}
+
+.text-gray{
+    color: var(--gray_);
+}
+
+
+
+/* font weight */
+
+
+.boldest{
+    font-weight: 700;
+}
+
+
+/* font size */
+
+.text-4xl{
+    font-size: 50px;
+}
+
 
 
 .dark{
@@ -116,19 +181,59 @@ a,
     border-color:var(--white);
 }
 
+label{
+    font-size: 14px;
+    color: var(--gray_);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+form input{
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--gray_);
+    border-radius: 8px;
+    padding:9px 14px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+input:focus{
+    outline-color: var(--orange_);
+    border-color: var(--orange_);
+}
+
+input::placeholder{
+    color:var(--gray_);
+    font-size: 14px;
+}
+
+
+
+button{
+    border: none;
+    padding: 9px 18px;
+    background-color: var(--orange_);
+    color: var(--white);
+    width: 100%;
+    border-radius: 8px;
+
+}
+
+
 .pass_input_div{
     position: relative;
 }
 
 
-.red_btn{
+/* .red_btn{
     background-color: var(--orange);
-}
+} */
 
 .pass_input_div i{
     position: absolute;
-    right: 0;
-    color: white;
+    right: 15px;
+    color: var(--gray_);
     top: 30%;
     cursor: pointer;
 }

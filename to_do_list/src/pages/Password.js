@@ -71,18 +71,27 @@ function Password(props) {
             <div className='pt-5 container d-flex justify-content-center align-items-center'>
                 <div className='d-flex justify-content-center align-items-center flex-column gap-4 auth-div'>
                     <h3>Change Password</h3>
-                    <form onSubmit={handleSubmit} className='d-flex justify-content-center align-items-center flex-column gap-4'>
-                        <div className='pass_input_div w-100'>
-                            <input id='password' type='password' placeholder='password' required />
-                            <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                    <form onSubmit={handleSubmit} className='d-flex auth-form justify-content-center align-items-center flex-column gap-4'>
+                        <div>
+                            <label htmlFor='password'>Password</label>
+                            <div className='pass_input_div w-100'>
+                                <input id='password' type='password' placeholder='pass' required />
+                                <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                            </div>
                         </div>
-                        <div className='pass_input_div w-100'>
-                            <input id='confirm_password' type='password' placeholder='Confirm password' required/>
-                            <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                        <div>
+                            <label htmlFor='confirm_password'>Confirm Password</label>
+                            <div className='pass_input_div w-100'>
+                                <input id='confirm_password' type='password' placeholder='Confirm password' required/>
+                                <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                            </div>
                         </div>
+                        
                         <button type='submit'>Change</button>
                     </form>
-                    <Link to={'/signUp'} style={{color: 'white',display:'flex'}}>Don't have an account ?</Link>
+                    <div className='auth-a'>
+                        <Link to={'/signUp'} style={{display:'flex'}}>Don't have an account ?</Link>
+                    </div>
                 </div>
                 
             </div>

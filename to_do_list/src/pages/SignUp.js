@@ -90,26 +90,38 @@ function SignUp(props) {
 
     return (
         
-        <div className='container-fluid pt-5 auth-cont'>
-            <div className='pt-5 container d-flex justify-content-center align-items-center'>
-                <div className='d-flex justify-content-center align-items-center flex-column gap-4 auth-div'>
-                    <h3>Sign Up</h3>
+        <div className='container-fluid pt-5 bg-smoke' style={{height:"100vh"}}>
+            <div className='pt-2 container d-flex justify-content-center align-items-center'>
+                <div className='d-flex justify-content-center align-items-center bg-white border flex-column gap-4 auth-div'>
+                    <h4>Create Account</h4>
                     <GoogleLogin
 
                         onSuccess={handleSuccess}
                         onError={handleError} 
                     />
-                    <span>or</span>
-                    <form onSubmit={handleSubmit} className='d-flex justify-content-center align-items-center flex-column gap-4'>
-                        <input id='email' type='email' placeholder='email' required/>
-                        <input id='username' type='text' placeholder='username' required maxLength={13}/>
-                        <div className='pass_input_div w-100'>
-                            <input id='password' type='password' placeholder='password' required />
-                            <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+
+                    <form onSubmit={handleSubmit} className='d-flex justify-content-center auth-form align-items-start flex-column gap-3'>
+                        <div>
+                            <label htmlFor='email'>Email</label>
+                            <input id='email' type='email' placeholder='you@example.com' required/>
+                        </div>
+                        <div>
+                            <label htmlFor='username'>Username</label>
+                            <input id='username' type='text' placeholder='username' required maxLength={13}/>
+                        </div>
+                        <div>
+                            <label htmlFor='password'>Password</label>
+                            <div className='pass_input_div w-100'>
+                                <input id='password' type='password' placeholder='pass' required />
+                                <i className='fa fa-eye' data-count={0} onClick={handleClick}></i>
+                            </div>
                         </div>
                         <button type='submit'>Sign Up!</button>
                     </form>
-                    <Link to={'/login'} style={{color: 'white'}}>Already have an account ?</Link>
+                    <div className='auth-a'>
+                        <Link to={'/login'}>Already have an account ?</Link>
+                    </div>
+
                 </div>
                 
             </div>

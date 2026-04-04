@@ -1,14 +1,16 @@
 import React from 'react';
 import LinkPages from './LinkPages';
 import '../assets/css/home.css';
-import Header from '../componets/Header';
-function Home(props) {
+import HomeMain from '../componets/HomeMain';
+
+function HomeAfter(props) {
     return (
         <div>
             <LinkPages/>
-            <Header/>
+            <HomeMain/>
+
         </div>
     );
 }
 
-export default Home;
+export default HomeAfter;

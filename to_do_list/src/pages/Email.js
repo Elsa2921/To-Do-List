@@ -43,11 +43,17 @@ function Email(props) {
             <div className='pt-5 container d-flex justify-content-center align-items-center'>
                 <div className='d-flex justify-content-center align-items-center flex-column gap-4 auth-div'>
                     <h3>Forgot Password</h3>
-                    <form onSubmit={handleSubmit} className='d-flex justify-content-center align-items-center flex-column gap-4'>
-                        <input id='email' type='email' placeholder='email' required/>
+                    <form onSubmit={handleSubmit} className='d-flex auth-form justify-content-center align-items-center flex-column gap-4'>
+                        <div>
+                            <label htmlFor='email'>Email</label>
+                            <input id='email' type='email' placeholder='you@example.com' required/>
+
+                        </div>
                         <button type='submit'>Next</button>
                     </form>
-                    <Link to={'/signUp'} style={{color: 'white',display:'flex'}}>Don't have an account ?</Link>
+                    <div className='auth-a'>
+                        <Link to={'/signUp'} style={{display:'flex'}}>Don't have an account ?</Link>
+                    </div>
                 </div>
                 
             </div>
