@@ -6,7 +6,7 @@ import CategoriesMain from '../componets/CategoriesMain';
 
 function Categories(props) {
     return (
-        <div>
+        <div className='main-bg'>
             <LinkPages/>
             <CategoriesMain/>
         </div>

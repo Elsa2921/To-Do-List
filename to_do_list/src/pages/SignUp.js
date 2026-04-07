@@ -90,9 +90,12 @@ function SignUp(props) {
 
     return (
         
-        <div className='container-fluid pt-5 bg-smoke' style={{height:"100vh"}}>
+        <div className='container-fluid pt-5 auth-cont'>
             <div className='pt-2 container d-flex justify-content-center align-items-center'>
-                <div className='d-flex justify-content-center align-items-center bg-white border flex-column gap-4 auth-div'>
+                <div className='d-flex justify-content-center align-items-center flex-column gap-4 auth-div'>
+                    <Link to={'/'} className='to-home'>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </Link>
                     <h4>Create Account</h4>
                     <GoogleLogin
 

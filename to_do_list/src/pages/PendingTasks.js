@@ -4,7 +4,7 @@ import PendingTasksMain from '../componets/PendingTasksMain';
 
 function PendingTasks(props) {
     return (
-        <div>
+        <div className='main-bg'>
             <LinkPages/>
             <PendingTasksMain/>
         </div>

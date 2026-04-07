@@ -4,7 +4,7 @@ import ProfileProgress from '../componets/ProfileProgress';
 import '../assets/css/profile.css';
 function Profile(props) {
     return (
-        <div>
+        <div className='main-bg'>
             <LinkPages/>
             <ProfileProgress/>
         </div>

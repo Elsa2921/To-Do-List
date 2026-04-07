@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAppConfig } from '../config';
+import Title from './Title';
+import SecondaryText from './SecondaryText';
+import GraySmallText from './GraySmallText';
 
 function ProfileProgress(props) {
     const [name,setName] = useState('');
@@ -10,6 +13,7 @@ function ProfileProgress(props) {
     const [today,setToday]= useState(0);
     const [graphic,setGrapic] = useState([]);
     const [count, setCount] = useState(0);
+    const [email,setEmail] = useState('youremail@example.com')
     const [delCount, setDelCount] = useState(0);
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
@@ -34,6 +38,7 @@ function ProfileProgress(props) {
                 }
                 else{
                     setName(data['profile']['username'])
+                    setEmail(data['profile']['email'])
                     setAll(data['allCompletedTasks'])
                     setToday(data['todayCompletedTasks'])
                     setGrapic(data['graphic']);
@@ -131,27 +136,6 @@ function ProfileProgress(props) {
     }
 
 
-    const handleDetails =(e)=>{
-        setCount(count+1)
-        let classes = e.target.classList
-        let box = e.target.previousElementSibling.classList;
-        
-        if(count%2===0){
-            classes.add('fa-chevron-left');
-            classes.remove('fa-chevron-right')
-
-            box.add('profile-details');
-            box.remove('profile-details-close')
-        }
-        else{
-            classes.remove('fa-chevron-left');
-            classes.add('fa-chevron-right')
-
-            box.remove('profile-details');
-            box.add('profile-details-close')
-        }
-        
-    }
 
     const handleAccDelete = async ()=>{
         try{
@@ -187,62 +171,74 @@ function ProfileProgress(props) {
 
     return (
         <div className='container-fluid pb-5'>
-            <div className='profile-header container d-flex justify-content-end align-items-center position-relative flex-wrap gap-5 pb-5'>
-                <div className='position-absolute d-flex justify-content-start align-items-start flex-column gap-3 profile-details-close'>
-                    <div className='d-flex justify-content-start align-items-start gap-1'>
+            <Title title='Profile'/>
+            <div className='container profile-container'>
+                <div className='d-flex profile-detail-box justify-content-start align-items-center flex-column gap-3 white-box'>
+                    <i className="fa fa-user profile-icon" aria-hidden="true"></i>
+                    <div className='d-flex justify-content-center align-items-center w-100 text-center gap-1'>
                         <h5 onBlur={handleUsernameEdit}>{name}</h5> 
                         <i className='ms-2 fa fa-pencil' onClick={handleAllowEdit}></i>
                     </div>
-                    <button onClick={hadleLogout} className='dark_btn' >Logout</button>
-                    <button className="orange_btn mt-4" onClick={handleDelCloseOpen}>Delete account <i className="fa fa-trash"></i></button>
+                    <h4 className='gray-small'>{email}</h4>
+                    <hr className='bg-gray w-100'/>
+                    <button onClick={hadleLogout} className='smoke-btn w-100' >Logout</button>
+                    <button className="red-btn" onClick={handleDelCloseOpen}> <i className="fa fa-trash me-4"></i> Delete account</button>
                 
                 </div>
-                <i className="fa fa-chevron-right open_prof_details" aria-hidden="true" onClick={handleDetails}></i>
+
+                <div className='d-flex justify-content-start gap-4 flex-wrap flex-column w-100'>
+                    <div className='white-box'>
+                        <SecondaryText text='Statistics'/>
+                        <div className='doneTask-box'>
+                            <div className='doneTasks'>
+                                <h4>{all}</h4>
+                                <GraySmallText text="Total Completed"/>
+                            </div>
+                            <div className='doneTasks'>
+                                <h4 className='text-green'>{today}</h4>
+                                <GraySmallText text="Today's Completed"/>
+                            </div>
+                            <div className='doneTasks'>
+                                <h4  className='text-orange'>0</h4>
+                                <GraySmallText text="In progress"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div className='d-flex graphic-area white-box justify-content-start align-items-start gap-3 flex-column'>
+                        <SecondaryText text='Completed tasks of last 7 days'/>
+                            <div className='graphic_box d-flex justify-content-start align-items-end gap-3 py-5'>
+                                {Object.entries(graphic).map(([date,count])=>(
+                                    <div key={date} className='d-flex justify-content-center align-items-center gap-3 flex-column graphic_candle_box'>
+                                        <p>{count}</p>
+                                        <div style={{height:`${count ? count * 20 : 5}px`, maxHeight:'200px'}} className={`graphic_candle ${count ? "bg-orange" : "bg-smoke"} `}></div>
+                                        <span>{date}</span>
+                                    </div>
+                                ))
+                                
+                                }
+                            </div>
+                    </div>
+            </div>
 
                 
             </div>
 
-            <div className='profile-delete-cont  d-flex justify-content-center align-items-center position-fixed flex-wrap gap-5 pb-5 profile-delete-cont-none'>
-                <div className='profile-delete-block d-flex justify-content-center align-items-center flex-column gap-3'>
+            <div className='profile-delete-cont d-flex justify-content-center align-items-center position-fixed flex-wrap gap-5 pb-5 profile-delete-cont-none'>
+                <div className='profile-delete-block  white-box d-flex justify-content-center align-items-center flex-column gap-3'>
                     <p>Do You Want to Delete your Account ?</p>
                     <div className='d-flex justify-content-center align-items-center gap-4'>
-                        <button className='orange_btn' onClick={handleAccDelete}>OK</button>
-                        <button className='dark_btn' onClick={handleDelCloseOpen}>Cancel</button>
+                        <button className='red-btn' onClick={handleAccDelete}>Delete</button>
+                        <button className='smoke-btn' onClick={handleDelCloseOpen}>Cancel</button>
                     </div>
                 </div>
 
                 
             </div>
             
-            <div className='container d-flex justify-content-start align-items-start flex-wrap gap-5'>
-                <div className='doneTask-box d-flex justify-content-start align-items-start gap-3 flex-row flex-md-column pe-0 pe-md-5'> 
-                    <div className='doneTasks d-flex justify-content-center gap-2 align-items-center flex-column'>
-                        <h4>{today}</h4>
-                        <p>Today's Completed tasks</p>
-                    </div>
-                    <div className='doneTasks d-flex justify-content-center gap-2 align-items-center flex-column'>
-                        <h4>{all}</h4>
-                        <p>All time Completed tasks</p>
-                    </div>
-                </div>
-
-                
-
-                <div className='d-flex justify-content-start align-items-start gap-3 flex-column graphic-area'>
-                    <h4>Completed tasks of last 7 days</h4>
-                        <div className='graphic_box d-flex justify-content-start align-items-end gap-3 py-5'>
-                            {Object.entries(graphic).map(([date,count])=>(
-                                <div key={date} className='d-flex justify-content-center align-items-center gap-3 flex-column graphic_candle_box'>
-                                    <p>{count}</p>
-                                    <div style={{height:`${count*20}px`, maxHeight:'200px'}} className='graphic_candle'></div>
-                                    <span>{date}</span>
-                                </div>
-                            ))
-                            
-                            }
-                        </div>
-                </div>
-            </div>
+            
         </div>
     );
 }

@@ -1,70 +1,48 @@
 :root{
-    --white : #eff1f3;
+    --smoke : rgb(244,242,238);
+    --white: white;
     --light-blue: #3e92cc;
+    --light-orange: rgb(251,244,242);
     --dark-blue: rgb(34, 56, 67);
-    --blue: rgb(94, 173, 232);
-    --orange: rgb(220, 104, 27);
+    --blue: #5eade8;
+    --orange_: rgb(224,122,95);
+    --gray_: rgb(124,124,124);
+    --black: rgb(54,54,54);
 }
 
 
-
-.profile-header h5{
-    color: var(--dark-blue);
-    font-size: clamp(14px ,1.1vw ,20px);
-
+.profile-container{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    align-items: start;
 }
 
-.doneTasks{
-    padding: 20px;
-    background-color: var(--orange);
-    /* background-color: rgba(94, 173, 232, .7); */
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    width: 250px;
+.profile-detail-box{
+    width: 400px;
 }
 
+
+.profile-detail-box .red-btn{
+    width: 100%;
+}
 
 .fa-pencil{
     cursor: pointer;
 }
 
 
-.open_prof_details{
-    padding: 13px 8px;
-    background-color: gray;
+.profile-icon{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: var(--orange_);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
-    border-radius: 5px;
-    font-size: clamp(14px ,1.4vw ,17px);
-    cursor: pointer;
+    font-size: clamp(20px ,2.5vw ,40px);
 }
-
-.dark_btn{
-    background-color: var(--dark-blue);
-}
-.profile-details-close{
-    width: 0;
-    height: 0;
-    right: 60px;
-    top: 0;
-    overflow: hidden;
-    transition: .5s ease;
-}
-.profile-details{
-    width: fit-content;
-    height: fit-content;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: var(--blue);
-    right: 60px;
-    top: 0;
-    transition: .5s ease;
-}
-
-.orange_btn{
-    background-color: var(--orange);
-}
-
 
 .profile-delete-cont{
     width: 100%;
@@ -88,17 +66,27 @@
     padding:30px 20px;
     height: 170px;
     border-radius: 10px;
-    background-color: var(--blue);
     z-index: 6;
 }
 .profile-delete-cont-none .profile-delete-block{
     z-index: 7;
 }
 
-.graphic-area h4{
-    font-size: clamp(16px ,1.2vw ,24px);
-    color: var(--light-blue);
+.doneTask-box{
+    display: flex;
+    justify-content: start;
+    gap: 40px;
+    flex-wrap: wrap;
 }
+
+.doneTask-box h4{
+    font-size: clamp(20px ,2.5vw ,40px);
+}
+
+/* .graphic-area{
+    background-color: darksalmon;
+    width: 100%;
+} */
 
 .graphic_box{
     overflow: auto;
@@ -106,7 +94,7 @@
 }
 
 .graphic_candle_box{
-    width: 30px;
+    width: 50px;
     text-align: center;
     color: rgb(112, 110, 110);
 }
@@ -118,7 +106,9 @@
 
 .graphic_candle {
     width: 100%;
-    background-color: var(--orange);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    /* background-color: var(--orange_); */
 }
 
 

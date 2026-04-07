@@ -4,7 +4,7 @@ import '../assets/css/team.css';
 import TeamTasksMain from '../componets/TeamTasksMain';
 function TeamTasks(props) {
     return (
-        <div>
+        <div className='main-bg'>
             <LinkPages/>
             <TeamTasksMain/>
         </div>

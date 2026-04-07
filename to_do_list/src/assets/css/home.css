@@ -1,12 +1,15 @@
 :root{
-    --white : #eff1f3;
+    --smoke : rgb(244,242,238);
+    --white: white;
     --light-blue: #3e92cc;
+    --light-orange: rgb(251,244,242);
     --dark-blue: rgb(34, 56, 67);
     --blue: #5eade8;
-    --orange: rgb(220, 104, 27);
+    --orange_: rgb(224,122,95);
+    --gray_: rgb(124,124,124);
+    --black: rgb(54,54,54);
+    --pink: rgb(220,38,38);
 }
-
-
 
 
 
@@ -129,13 +132,14 @@
 }
 
 button{
-    border: none;
-    padding: 9px 18px;
+    border: 1px solid var(--orange_);
+    padding: 10px 30px;
     background-color: var(--orange_);
     color: var(--white);
-    font-size: clamp(14px ,1vw ,15px);
+    font-size: clamp(13px ,0.5vw ,14px);
     font-weight: 500;
-    width: 100%;
+    white-space: nowrap;
+    /* width: 100%; */
     border-radius: 8px;
 
 }

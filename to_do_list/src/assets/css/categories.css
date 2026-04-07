@@ -1,28 +1,32 @@
 :root{
-    --white : #eff1f3;
+    --smoke : rgb(244,242,238);
+    --white: white;
     --light-blue: #3e92cc;
+    --light-orange: rgb(251,244,242);
     --dark-blue: rgb(34, 56, 67);
     --blue: #5eade8;
-    --orange: rgb(220, 104, 27);
+    --orange_: rgb(224,122,95);
+    --gray_: rgb(124,124,124);
 }
+
 
 
 .categorie_box{
-    padding: 10px 20px;
     width: 15.4%;
-    height: 100px;
-    background-color: var(--blue);
-    color: var(--white);
-    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
 .categorie_box h2{
-    font-size: clamp(14px ,1.1vw ,24px);
+    font-size: clamp(14px ,1vw ,22px);
 }
 
 .categorie_box .delete{
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
+    color: var(--orange_);
 }
 
 

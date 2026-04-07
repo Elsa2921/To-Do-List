@@ -4,7 +4,7 @@ import CreateTeamMain from '../componets/CreateTeamMain';
 import '../assets/css/team.css';
 function CreateTeam(props) {
     return (
-        <div>
+        <div className='main-bg'>
             <LinkPages/>
             <CreateTeamMain/>
         </div>

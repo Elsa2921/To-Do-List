@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getAppConfig } from '../config';
+import Title from './Title';
 function CategoriesMain(props) {
     const [data,setData] = useState([]);
     const link = getAppConfig().REACT_APP_API_URI
@@ -76,19 +77,22 @@ function CategoriesMain(props) {
     }
     return (
         <div className='container-fluid  py-5'>
-            <form onSubmit={handleSubmit} className='container add_category d-flex justify-content-start align-items-start flex-wrap gap-4 pb-5'>
+            <Title title="Categories" text='Organize your tasks by category.'/>
+            
+            <form onSubmit={handleSubmit} className='container add_category d-flex justify-content-start align-items-start gap-4 pb-5'>
                 <input type='text' maxLength={20} id='category_input' placeholder='Add a category'/>
-                <button type='submit'>Add</button>
+                <button type='submit'><i className="fa fa-plus" aria-hidden="true"></i> Add Category</button>
             </form>
             <div className='container d-flex justify-content-start align-items-start gap-3 flex-wrap'>
                 
                 {data.map((element) => (
                     
-                    <div  key={element['id']} className='categorie_box d-flex justify-content-start align-items-center flex-column'>
+                    <div  key={element['id']} className='categorie_box white-box'>
+                        <h2>{element['category']}</h2>
                         <div className='w-100 text-end'>
                             <i className="fa fa-trash delete" aria-hidden="true" data-id={element['id']} onClick={handleDelete}></i>
                         </div>
-                        <h2>{element['category']}</h2>
+                        
                     </div>
                 ))}
             </div>
