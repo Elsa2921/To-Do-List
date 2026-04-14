@@ -1,9 +1,14 @@
 :root{
-    --white : #eff1f3;
-    --light-blue: #3e92cc;
-    --dark-blue: rgb(34, 56, 67);
-    --blue: #5eade8;
-    --orange: rgb(220, 104, 27);
+    --smoke : rgb(244,242,238);
+    --white: white;
+    --green: rgb(106,153,78);
+    --light-orange: rgb(251,244,242);
+    --orange_: rgb(224,122,95);
+    --gray_: rgb(124,124,124);
+    --black: rgb(54,54,54);
+    --pink: rgb(220,38,110);
+    --brown: rgb(146,64,14);
+    --baby-yellow: rgb(254,243,199);
 }
 
 
@@ -38,26 +43,26 @@
 
 
 
-.other_user_box{
+.user_search_res{
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px 5px;
-    border-bottom: 1px solid gray;
 }
 
-.other_user_box .fa-user, .team_box .fa-user{
-    width: 45px;
-    height: 45px;
+.user_search_res .fa-user, .team_box .fa-user{
+    width: 40px;
+    height: 40px;
     font-size: clamp(15px ,1.3vw ,21px);
     color: white;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--orange);
+    background-color: var(--orange_);
 }
 .team_box .fa-user{
     width: 30px;
@@ -81,15 +86,6 @@
     font-size: clamp(14px ,1.4vw ,17px);
 }
 
-.other_user_box button {
-    padding: 7px 15px;
-}
-
-
-.team_cont button i{
-    pointer-events: none;
-}
-
 
 .team_box .fa-trash{
     font-size: clamp(15px ,1.3vw ,21px);
@@ -99,27 +95,6 @@
 
 
 
-
-.team-tasks{
-    padding: 15px;
-    background-color: var(--light-blue);
-    border-radius: 10px;
-}
-
-.team-tasks p{
-    color: var(--white);
-}
-
-.team-tasks span{
-    color: #bab8b8;
-}
-
-
-
-
-.team-tasks h4{
-    color: white;
-}
 @media(max-width: 768px){
     .team_box{
         width: 100%;

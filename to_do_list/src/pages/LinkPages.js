@@ -134,14 +134,6 @@ function LinkPages(props) {
                             Categories
                         </NavLink>
                     </li>
-                    
-                    <li>
-                        <NavLink to={'/pendingTasks'}>
-                            <i className="fa fa-tasks" aria-hidden="true"></i>
-                            Pending Tasks 
-                        </NavLink>
-                    </li>
-
                     <li>
                         <NavLink to={'/createTeam'}>
                             <i className='fa fa-plus'></i>
@@ -155,6 +147,16 @@ function LinkPages(props) {
                         </NavLink>
                     </li>
 
+
+                    <li>
+                        <NavLink to={'/pendingTasks'}>
+                            <i className="fa fa-tasks" aria-hidden="true"></i>
+                            Pending Tasks 
+                        </NavLink>
+                    </li>
+
+                    
+                   
                     
                     <li>
                         Theme

@@ -80,7 +80,7 @@ function CategoriesMain(props) {
             <Title title="Categories" text='Organize your tasks by category.'/>
             
             <form onSubmit={handleSubmit} className='container add_category d-flex justify-content-start align-items-start gap-4 pb-5'>
-                <input type='text' maxLength={20} id='category_input' placeholder='Add a category'/>
+                <input type='text' maxLength={20} className='w-100' id='category_input' placeholder='Add a category'/>
                 <button type='submit'><i className="fa fa-plus" aria-hidden="true"></i> Add Category</button>
             </form>
             <div className='container d-flex justify-content-start align-items-start gap-3 flex-wrap'>

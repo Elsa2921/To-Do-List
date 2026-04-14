@@ -174,7 +174,7 @@ function ProfileProgress(props) {
             <Title title='Profile'/>
             <div className='container profile-container'>
                 <div className='d-flex profile-detail-box justify-content-start align-items-center flex-column gap-3 white-box'>
-                    <i className="fa fa-user profile-icon" aria-hidden="true"></i>
+                    <i className="fa fa-user profile-icon mb-3" aria-hidden="true"></i>
                     <div className='d-flex justify-content-center align-items-center w-100 text-center gap-1'>
                         <h5 onBlur={handleUsernameEdit}>{name}</h5> 
                         <i className='ms-2 fa fa-pencil' onClick={handleAllowEdit}></i>
@@ -221,7 +221,7 @@ function ProfileProgress(props) {
                                 }
                             </div>
                     </div>
-            </div>
+                </div>
 
                 
             </div>

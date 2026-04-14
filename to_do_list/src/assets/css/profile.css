@@ -75,7 +75,7 @@
 .doneTask-box{
     display: flex;
     justify-content: start;
-    gap: 40px;
+    gap: 70px;
     flex-wrap: wrap;
 }
 
@@ -89,12 +89,13 @@
 } */
 
 .graphic_box{
+    width: 100%;
     overflow: auto;
     overflow-y: hidden;
 }
 
 .graphic_candle_box{
-    width: 50px;
+    width: 30%;
     text-align: center;
     color: rgb(112, 110, 110);
 }

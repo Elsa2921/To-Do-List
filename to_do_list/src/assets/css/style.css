@@ -3,12 +3,12 @@
     --white: white;
     --green: rgb(106,153,78);
     --light-orange: rgb(251,244,242);
-    --dark-blue: rgb(34, 56, 67);
-    --blue: #5eade8;
     --orange_: rgb(224,122,95);
     --gray_: rgb(124,124,124);
     --black: rgb(54,54,54);
     --pink: rgb(220,38,110);
+    --brown: rgb(146,64,14);
+    --baby-yellow: rgb(254,243,199);
 }
 
 
@@ -68,6 +68,10 @@
     color: var(--green);
 }
 
+.text-red{
+    color: var(--pink);
+}
+
 
 .gray-small{
     color: #a5a4a4;
@@ -119,7 +123,6 @@
     letter-spacing: .7px;
     margin-bottom: 20px;
 }
-
 
 
 .to-home{
@@ -213,30 +216,39 @@ a,
 .navbar-cont-fl a{
     text-decoration: none;
 }
-.sideBar li, 
-.sideBar a{
+
+.sideBar li{
     width: 100%;
     border-radius: 9px;
+    transition: .4s ease;    
+
+
+}
+
+.sideBar li a{
+    padding: 10px;
+    border-radius: 9px;
+    width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 10px;
     color: black;
     font-size: clamp(14px ,1.4vw ,16px);
+    transition: .4s ease;    
+
 }
 
 .sideBar .active{
-    color: var(--dark-blue);
+    color: var(--orange_);
+    font-weight: 600;
+    background-color: var(--smoke);
 }
 
 .sideBar li i{
     font-size: clamp(14px ,1.4vw ,19px);
-}
-
-.sideBar li{
-    padding: 10px;
     transition: .4s ease;    
-    border-bottom: 2px solid transparent;
+
 }
 
 
@@ -257,7 +269,6 @@ label{
 }
 
 form input{
-    width: 100%;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 8px;

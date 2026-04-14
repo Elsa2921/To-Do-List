@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { getAppConfig } from '../config';
+import Title from './Title';
+import SecondaryText from './SecondaryText'
+import IconAndText from './IconAndText';
+import Badge from './Badge';
 
 function TeamTasksMain(props) {
     const [projects,setProjects] = useState([]);
@@ -47,11 +51,8 @@ function TeamTasksMain(props) {
                     withCredentials:true
                 }); 
                 const data = res.data
-                if(data.tasks){
-                    setTasks(data.tasks)
-                }
-                if(data.done_tasks){
-                    setDoneT(data.done_tasks)
+                if(data){
+                    setTasks(data)
                 }
            }
            catch(error){
@@ -141,12 +142,11 @@ function TeamTasksMain(props) {
         
     }
 
-    const handleDeleteTask = async(e)=>{
+    const handleDeleteTask = async(id_)=>{
         try{
-            const id1 = e.target.getAttribute('data-id')
             await axios.delete(link,{
                 'data':{
-                    'deleteProjectTask':id1
+                    'deleteProjectTask':id_
                 },
                 withCredentials:true
             })
@@ -158,9 +158,9 @@ function TeamTasksMain(props) {
     }
 
     return (
-        <div className='container-fluid pb-5 team_cont'>
-            <div className='container d-flex justify-content-start align-items-start flex-column gap-4 pt-5'>
-                <h2 className='w-100 text-center'>{name}</h2>
+        <div className='container-fluid pb-5'>
+            <Title title='Team Tasks' text='Assign and track tasks across projects'/>
+            <div className='container d-flex justify-content-start align-items-start flex-column gap-4'>
                 <div className='w-100 d-flex justify-content-between align-items-end gap-4 flex-wrap pt-4'>
                     <div className='d-flex justify-content-between align-items-start gap-3 flex-column'>
                         <select defaultValue={'a0'} id='select_team' onInput={handleProjectSelect}>
@@ -172,7 +172,7 @@ function TeamTasksMain(props) {
                         </select>
                     </div>
 
-                    <form onSubmit={handleAddTask} className='d-flex justify-content-start align-items-end gap-4 flex-wrap'>
+                    <form onSubmit={handleAddTask} className='d-flex justify-content-start align-items-end gap-3 flex-wrap'>
                         <input required type='text' name='task' placeholder='Write a task'/>
                         <div className='d-flex justify-content-between align-items-start gap-3 flex-column'>
                             <label htmlFor='task_deadline'>
@@ -191,47 +191,37 @@ function TeamTasksMain(props) {
                         </div>
 
                         <button type='submit'>
-                            <i className='fa fa-plus'></i>
+                            <i className='fa fa-plus me-2'></i>
+                            Add Task
                         </button>
                     </form>
+                    
                 </div>
                 <div className='pt-3 w-100 d-flex justify-content-between align-items-start gap-4 flex-wrap'>
-                    <div className='team_box p-4'>
-                        <h3>Tasks </h3>     
+                    {name?
+                    <div className='w-100 d-flex flex-column gap-2 justify-content-start'>
                         {tasks?.map((element)=>(
-                            <div key={element.id} className='team-tasks d-flex w-100 justify-content-between aplign-items-center gap-3 flex-wrap'>
-                                <div className='w-100 d-flex justify-content-between align-items-center  flex-wrap gap-3'>
-                                    <div className='d-flex justify-content-start align-items-center gap-4'>
-                                        <i className='fa fa-user'></i>
-                                        <h4>{element?.username}</h4>
-                                    </div>
-
-                                    <i className='fa fa-trash' data-id={element.id} onClick={handleDeleteTask}></i>
+                            <div key={element.id} className='white-box pt-3 pb-1 d-flex w-100 justify-content-between aplign-items-center gap-3'>
+                                <div className='d-flex  justify-content-start align-items-center gap-4'>
+                                    <i className='h-100 mt-2 fa fa-trash text-red' data-id={element.id} onClick={()=>handleDeleteTask(element.id)}></i>
+                                    <i className='h-100'>{element.task}</i>
                                 </div>
-                                <p className='text_task'>{element.task}</p>
-                                <span>Deadline: {element.deadline}</span>
+
+                                <div className='d-flex justify-content-start align-items-center gap-3'>
+                                    <Badge text={element?.username} bClass={'red-badge'}/>
+                                    <IconAndText icon={<i className="fa fa-calendar-o" aria-hidden="true"></i>} data={element.deadline}/>
+                                    <Badge text={element?.status} bClass={'yellow-badge'}/>
+                                
+                                </div>
+
                             </div>   
-                        ))}       
+                        ))
+                        }
+                              
                                    
                     </div>
-
-                    <div className='team_box p-4'>
-                        <h3>Done <i className='fa fa-check'></i></h3>
-                        {doneT?.map((element)=>(
-                            <div key={element.id} className='team-tasks d-flex w-100 justify-content-between aplign-items-center gap-3 flex-wrap'>
-                                <div className='w-100 d-flex justify-content-between align-items-center  flex-wrap gap-3'>
-                                    <div className='d-flex justify-content-start align-items-center gap-4'>
-                                        <i className='fa fa-user'></i>
-                                        <h4>{element.username}</h4>
-                                    </div>
-                                    <h6>Completed: {element.done_date}</h6>
-                                </div>
-                                
-                                <p className='text_task'>{element.task}</p>
-                                <span>Deadline: {element.deadline}</span>
-                            </div>   
-                        ))}  
-                    </div>
+                    : <SecondaryText text='Select a project please'/>
+                    } 
                 </div>
             </div>
         </div>

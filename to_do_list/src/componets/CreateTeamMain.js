@@ -2,60 +2,26 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAppConfig } from '../config';
+import Title from './Title';
+import SecondaryText from './SecondaryText';
+import GraySmallText from './GraySmallText';
+import IconAndText from './IconAndText';
+import Badge from './Badge';
 
 function CreateTeamMain(props) {
     const navigate = useNavigate();
-    const [project,setProject]  = useState([]);
+    const [projects,setProjects]  = useState([]);
     const [id,setId] = useState(0);
-    const [name,setName] = useState('')
-    const [deadline,setDeadline] = useState('')
     const [searchU,setSearchU] = useState([]);
-    const [members,setMembers] = useState([]);
     const [min,setMin] = useState([]);
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
         handleReload();
-        
-        if(id!==0){
-            handleGetMembers()
-        }
 
         const today = new Date().toISOString().split("T")[0]
         setMin(today)
     },[])
 
-
-    const handleGetMembers = async()=>{
-        try{
-            let res = await axios.get(link,{
-                'params':{
-                    'getTeamMembers':sessionStorage.getItem('id')
-                },
-                withCredentials: true
-    
-            })
-    
-            let data = res.data
-           
-            if(data.members){
-                setMembers(data.members)
-            }
-        }catch(error){
-            console.error(error)
-        }
-
-
-    }
-
-    const resetAll = ()=>{
-        setId(0)
-        setName('')
-        setDeadline('')
-        setSearchU([])
-        setMembers([])
-        setProject([])  
-        
-    }
 
     const handleReload = async () =>{
        try{
@@ -68,10 +34,9 @@ function CreateTeamMain(props) {
                 });
             
             const data = res.data
-            setProject([])
             
-            if(data.projects){
-                setProject(data.projects);
+            if(data.projects && data.projects.lenght !== 0){
+                setProjects(data.projects);
 
             }
        }
@@ -117,67 +82,19 @@ function CreateTeamMain(props) {
     }
 
 
-    
-
-
-    const handleSelect = (e)=>{
-        const r = (project.filter(item=>(
-            item.id==e.target.value          
-        )))
-        setDeadline(r[0]?.deadline)
-        setName(r[0]?.name)
-        setId(r[0]?.id);
-        setSearchU([])
-        sessionStorage.setItem('id',r[0]?.id)
-
-        handleReload()
-        handleGetMembers()
-        
-    }
-
-    const handleDeadlineChange = async(e)=>{
-        e.preventDefault()
-        if(id!==0){
-            let changeProjectDeadline = document.getElementById('changeDeadline').value
-        
-            if(changeProjectDeadline.length!==0){
-                try{
-                    let data = {
-                        changeProjectDeadline,
-                        id
-                    }
-                    let res  = await axios.put(link,data,{withCredentials:true})
-                    if(res.data){
-                        setDeadline(changeProjectDeadline)
-                        document.getElementById('changeDeadline').value = ''
-                        handleReload()
-                    }   
-                }
-                catch(error){
-                    console.error(error)
-                }
-                
-            }
-            else{
-                alert('empty field')
-            } 
-        }
-        else{
-            alert('select a project')
-        }
-    }
-
     const handleSearch =async(e)=>{
         e.preventDefault();
-        
-        let searchUser = document.getElementById('search_user').value
+        const fData = new FormData(e.target)
+        let searchUser = fData.get("search_user")
+        let project= fData.get("s_project")
         setSearchU([])
-        if(searchUser.trim()!==''){
+        if(searchUser.trim()!=='' && project){
            try{
+                setId(project)
                 let res = await axios.get(link,{
                     'params':{
                         searchUser,
-                        id
+                        "id":project
                     },
                     withCredentials: true
                     
@@ -196,11 +113,9 @@ function CreateTeamMain(props) {
     }
 
 
-    const handleAddMember = async(e)=>{
-        
+    const handleAddMember = async(user_id)=>{   
         if(id!==0){
             
-            const user_id = e.target.getAttribute('data-id');
             try{
                 let res = await axios.post(link,{
                     'addTeamMember':user_id,
@@ -209,7 +124,6 @@ function CreateTeamMain(props) {
                 if(res.data){
                     setSearchU([])
                     handleReload();
-                    handleGetMembers();
                 }
             }catch(error){
                 console.error(error)
@@ -223,19 +137,17 @@ function CreateTeamMain(props) {
     }
 
 
-    const handleMemberDelete  =async(e)=>{
-        const memberDelete = e.target.getAttribute('data-id')
+    const handleMemberDelete  =async(id)=>{
 
         try{
         let res =  await axios.delete(link,{
                 "data":{
-                    memberDelete
+                    "memberDelete" : id
                 },
                 withCredentials: true
             });
             if(res.data){
                 handleReload()
-                handleGetMembers();
             }   
         }catch(error){
             console.error(error)
@@ -243,18 +155,16 @@ function CreateTeamMain(props) {
        
     }
 
-    const handleDeleteProject = async()=>{
-        if(id!==0){
+    const handleDeleteProject = async(p_id)=>{
+        if(p_id!==0){
             try{
                 await axios.delete(link,{
                     'data':{
-                        'deleteProjectId':id
+                        'deleteProjectId':p_id
                     },
                     withCredentials:true
                 })
-                const select = document.getElementById('select_team')
-                select.value= 'a0' 
-                resetAll();
+                setProjects(projects.filter(p=>p.id!==p_id))
             }
             catch(error){
                 console.error(error)
@@ -262,99 +172,82 @@ function CreateTeamMain(props) {
 
 
         }
-        else{
-            alert('Please select the project you want to delete.')
-        }
     }
     return (
-        <div className='container-fluid pb-5 team_cont'>
-            <div className='container d-flex justify-content-start align-items-start flex-column gap-4 pt-5'>
-                <form onSubmit={AddProject} className='w-100 d-flex justify-content-start align-items-end gap-3 flex-wrap'>
-                    <input type='text' id='team_name' placeholder='Project Name' required maxLength={15}/>
+        <div className='container-fluid pb-5'>
+            <Title title='Teams & Projects' text='Create and manage team projects.'/>
+            <div className='container d-flex justify-content-start align-items-start flex-column gap-4'>
+                <form onSubmit={AddProject} className='white-box w-100 d-flex justify-content-start align-items-end gap-3'>
+                    <input type='text' id='team_name' className='w-100 bg-smoke' placeholder='Project Name' required maxLength={15}/>
                     <div className='d-flex justify-content-between align-items-start gap-3 flex-column'>
-                        <label htmlFor='project_deadline'>
-                            Project deadline
-                        </label>
-                    <input type='date' id='project_deadline' required min={min} onKeyDown={(e)=>e.preventDefault()}/>
+                    <input type='date' id='project_deadline' className='bg-smoke'  required min={min} onKeyDown={(e)=>e.preventDefault()}/>
                     </div>
                     <button>
-                        <i className='fa fa-plus'></i>
+                        <i className='fa fa-plus me-3'></i>
+                        Create Project
                     </button>
                 </form>
-                <div className='w-100 pt-4 text-center'>
-                    
-                    <h2>
-                        {name}
-                    </h2>
-                    <span>
-                        {deadline}
-                    </span>
+                
+                <div className='d-flex justify-content-start align-items-start gap-3'>
+                    {projects.length>0? projects.map(el => (
+                        <div className='white-box' key={el.id}>
+                            <div className='d-flex justify-content-between gap-5'>
+                                <SecondaryText text={el.name}/>
+                                <i className='fa fa-trash text-red' onClick={()=>handleDeleteProject(el.id)}></i>
+                            </div>
+                            <div className='d-flex justify-content-start gap-5'>
+                                <IconAndText icon={<i className="fa fa-calendar-o" aria-hidden="true"></i>} data={el.deadline}/>
+
+                                <IconAndText icon={<i className="fa fa-tasks" aria-hidden="true"></i>} data={`${el.tasks} tasks`}/>
+                                
+                            </div>
+                            <div className='d-flex justify-content-start gap-2 flex-wrap'>
+                                {JSON.parse(el.members || "[]").map(member=>(
+                                    <Badge key={member.id} bClass='yellow-badge' text={`${member.username}`} func={()=>handleMemberDelete(member.id)}/>
+                                ))}
+                            </div>
+                            
+                        </div>
+                    )): ''}
                 </div>
-                <div className='w-100 d-flex justify-content-start align-items-end gap-5 flex-wrap'>
-                    <div className='d-flex justify-content-between align-items-start gap-3 flex-column'>
-                        <select defaultValue={'a0'} id='select_team' onInput={handleSelect}>
-                            <option value={'a0'} disabled>Select a project</option>
-                            {project.length!==-1 ? project.map((element)=>(
-                                    <option key={element['id']} value={element['id']}>{element['name']}</option>
-                                ))
-                                    : ''
-                            }
-                            
-                            
-                        </select>
+                {projects.length>0?
+                <div className='pt-5 w-100 d-flex justify-content-between align-items-start gap-5 flex-wrap flex-lg-nowrap'>
+                    <div>
+                        <SecondaryText text="Add Member"/>
+
+                        <form onSubmit={handleSearch} className='w-100 d-flex justify-content-start align-items-end flex-wrap flex-lg-nowrap gap-3'>
+                            <select defaultValue={'a0'} id='select_team' name='s_project'>
+                                <option disabled value={'a0'}>Select a project</option>
+                                {projects.map(item=>(
+                                    <option key={item.id} value={item.id} data-name={item.name}>{item.name}</option>
+                                ))}
+
+                            </select>
+                            <input type='text' id='search_user' name='search_user' placeholder='Search user' required/>
+                            <button type='submit'>
+                                <i className='fa fa-search'></i>
+                            </button>
+                        </form>
                     </div>
 
-                    <form onSubmit={handleSearch} className='d-flex justify-content-start align-items-start gap-3 flex-wrap'>
-                        <input type='text' id='search_user' placeholder='Search user' required/>
-                        <button type='submit'>
-                            <i className='fa fa-search'></i>
-                        </button>
-                    </form>
-
-                </div>
-                <div className='pt-5 w-100 d-flex justify-content-between align-items-start gap-4 flex-wrap'>
-                    <div className='team_box p-4'>
-                        <h3>Search res</h3>   
+                    {searchU.length>0?
+                    <div className='white-box user_search_res p-3'>
                         {searchU.map((element)=>(
-                            <div key={element.id} className='other_user_box'>
+                            <div key={element.id} className='w-100 d-flex justify-content-between align-items-center gap-5 border-bottom p-3 '>
                                 <div className='d-flex justify-content-start align-items-center flew-wrap gap-4'>
                                     <i className='fa fa-user'></i>
-                                    <h4>{element.username}</h4>
+                                    <SecondaryText text={element.username}/>
                                 </div>
-                                <button data-id={element.id} onClick={handleAddMember}>
-                                    <i className='fa fa-plus'></i>
+                                <button onClick={()=>handleAddMember(element.id)}>
+                                    <i className='fa fa-plus me-2'></i>
+                                    Add
                                 </button>
                             </div>
                         ))}                      
                     </div>
-
-                    <div className='team_box p-4'>
-                        <h3>Members</h3>
-                        {members.map((element)=>(
-                             <div key={element.id} className='other_user_box'>
-                                <div className='d-flex justify-content-start align-items-center flew-wrap gap-4'>
-                                    <i className='fa fa-user'></i>
-                                    <h4>{element.username}</h4>
-                                </div>
-                                <button className='red_btn' data-id={element.id} onClick={handleMemberDelete}>
-                                    <i className='fa fa-close'></i>
-                                </button>
-                            </div>
-                        ))}
-                         
-                    </div>
-                    <div className='w-100 pt-4 d-flex justify-content-between align-items-center  flex-wrap gap-4'>
-                       
-                        <form onSubmit={handleDeadlineChange} className='d-flex justify-content-center align-items-end gap-3 flex-wrap'>
-                            <h4>Change deadline</h4>
-                            <input type='date' required id='changeDeadline' min={min} onKeyDown={(e)=>e.preventDefault()}/>
-                            <button type='submit'>
-                                Change
-                            </button>
-                        </form>
-                        <button onClick={handleDeleteProject}>DELETE <i className='fa fa-trash'></i></button>
-                    </div>
+                    :''}
                 </div>
+                : <SecondaryText text={'No projects yet'}/>}
                 
             </div>
         </div>

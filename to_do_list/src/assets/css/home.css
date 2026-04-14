@@ -1,16 +1,22 @@
 :root{
     --smoke : rgb(244,242,238);
     --white: white;
-    --light-blue: #3e92cc;
+    --green: rgb(106,153,78);
     --light-orange: rgb(251,244,242);
-    --dark-blue: rgb(34, 56, 67);
-    --blue: #5eade8;
     --orange_: rgb(224,122,95);
     --gray_: rgb(124,124,124);
     --black: rgb(54,54,54);
-    --pink: rgb(220,38,38);
+    --pink: rgb(220,38,110);
+    --brown: rgb(146,64,14);
+    --baby-yellow: rgb(254,243,199);
 }
 
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 
 .addForm{
@@ -19,6 +25,34 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+}
+
+
+.badge{
+    border-radius: 30px;
+    padding: 6px 10px;
+    color: black;
+    font-size: clamp(11px ,.3vw ,12px);
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.badge i{
+    cursor: pointer;
+}
+
+.red-badge{
+    color: rgb(221,121,117);
+    background-color: rgb(248,236,232);
+}
+
+.yellow-badge{
+    color: var(--brown);
+    background-color: var(--baby-yellow);
 }
 
 
@@ -132,7 +166,7 @@
 }
 
 button{
-    border: 1px solid var(--orange_);
+    border: 1px solid  var(--orange_);
     padding: 10px 30px;
     background-color: var(--orange_);
     color: var(--white);
@@ -151,10 +185,16 @@ button{
 
 select{
     width: 200px;
-    height: 30px;
-    outline: none;
-    background-color: rgba(146, 144, 144,.5);
-    /* background-color:; */
+    height: 42px;
+    
+    border: 1px solid #ccc;
+    padding: 5px 25px;
+    border-radius: 8px;
+    background-color: white;
+}
+select:focus{
+    outline-color: var(--orange_);
+    border-color: var(--orange_);
 }
 
 .category_h3{
@@ -199,10 +239,6 @@ select{
 
     button{
         padding: 6px 15px;
-    }
-    
-    select{
-        width: 150px;
     }
     
 }

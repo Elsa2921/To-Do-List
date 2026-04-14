@@ -37,6 +37,10 @@
     width: 100%;
 }
 
+.auth-form input{
+    width: 100%;
+}
+
 .auth-a{
     width: 100%;
     display: flex;
