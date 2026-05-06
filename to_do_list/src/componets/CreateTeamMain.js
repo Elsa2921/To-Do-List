@@ -174,7 +174,7 @@ function CreateTeamMain(props) {
         }
     }
     return (
-        <div className='container-fluid pb-5'>
+        <div className='container-fluid  py-4'>
             <Title title='Teams & Projects' text='Create and manage team projects.'/>
             <div className='container d-flex justify-content-start align-items-start flex-column gap-4'>
                 <form onSubmit={AddProject} className='white-box w-100 d-flex justify-content-start align-items-end gap-3'>

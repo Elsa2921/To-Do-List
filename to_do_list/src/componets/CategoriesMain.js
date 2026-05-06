@@ -30,21 +30,21 @@ function CategoriesMain(props) {
     }
 
 
-    const handleDelete = async(e)=>{
+    const handleDelete = async(id)=>{
         try{
             const res = await axios.delete(link,{
                 'data':{
                     'categorie':true,
-                    'id':e.target.getAttribute('data-id')
+                    'id':id
                 },
                 withCredentials:true
             });
-            const data =res.data
-            if(data['error']){
-                alert(data['error'])
+            const r1 =res.data
+            if(r1['error']){
+                alert(r1['error'])
             }
             else{
-                getInfo();
+                setData(data.filter(e=>e.id !== id))
             }
         }catch(error){
             console.error(error)
@@ -76,7 +76,7 @@ function CategoriesMain(props) {
         }
     }
     return (
-        <div className='container-fluid  py-5'>
+        <div className='container-fluid  py-4'>
             <Title title="Categories" text='Organize your tasks by category.'/>
             
             <form onSubmit={handleSubmit} className='container add_category d-flex justify-content-start align-items-start gap-4 pb-5'>
@@ -90,7 +90,7 @@ function CategoriesMain(props) {
                     <div  key={element['id']} className='categorie_box white-box'>
                         <h2>{element['category']}</h2>
                         <div className='w-100 text-end'>
-                            <i className="fa fa-trash delete" aria-hidden="true" data-id={element['id']} onClick={handleDelete}></i>
+                            <i className="fa fa-trash delete" aria-hidden="true" onClick={()=>handleDelete(element['id'])}></i>
                         </div>
                         
                     </div>

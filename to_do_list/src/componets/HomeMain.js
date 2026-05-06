@@ -1,34 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios'
 import { getAppConfig } from '../config';
+import Title from './Title';
+import Badge from './Badge';
+
+import Button from './Button';
 function HomeMain(props) {
     const [category,setCategory] = useState(null); 
     const [data,setData] = useState([]);
     const [tasks,setTasks] = useState([]);
-    const [done, setDone] = useState([]);
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [categoryFilter, setCategoryFilter] = useState('all');
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
         handleReload();
     },[])
+
 
     const handleReload = async()=>{
        
         try{
             const res =  await axios.get(link,{
                 'params':{
-                    'homeReload':true,
-                    'category':sessionStorage.getItem('category')||''
+                    'homeReload':true
                 },
                 withCredentials:true
                 
             })
-            if(res.data['all_tasks']){
-                if(res.data['all_tasks']['tasks']){
-                    setTasks(res.data['all_tasks']['tasks'])
-                }
-                if(res.data['all_tasks']['done']){
-                    setDone(res.data['all_tasks']['done']);
-                }
+            if(res.data['tasks']){
+                setTasks(res.data['tasks'])
+                console.log(res.data['tasks'])
             }
             if(res.data['categories'] && res.data['categories'].length !== 0){
                 let c= res.data['categories']
@@ -40,56 +41,25 @@ function HomeMain(props) {
                 setData(c)
             }
             
-            
         }catch(error){
             console.error(error)
         }
     }
 
-    const handleMoreOpt = (e)=>{
-        let count = parseInt(e.target.getAttribute('data-count'))
-        const key = e.target.getAttribute('data-key')
-        const open = document.querySelector(`div[data-opt="${key}"]`)
-        if(count%2===1){
-            open.classList.add('task_opt_open')
-        }
-        else{
-            open.classList.remove('task_opt_open')
-        }
-        count +=1;
-        e.target.setAttribute('data-count',count)        
-    }
 
 
-
-    const handleEdit = (e)=>{
-        let edit= e.target.getAttribute('data-edit')
-        let key = e.target.getAttribute('data-key')
-        let text = document.querySelector(`.text_task[data-key='${key}']`)
-        if(edit==='1'){
-            text.removeAttribute('contentEditable')
-            
-            e.target.setAttribute('data-edit','0')
-            e.target.style.color = 'white'
-        }
-        else{
-            text.setAttribute('contentEditable',true)
-            e.target.setAttribute('data-edit','1')
-            e.target.style.color = 'rgb(34, 56, 67)'
-        }
-    }
-
-
-    const handleSubmit = async (e)=>{
+    const handleAdd = async (e)=>{
         e.preventDefault()
         try{
-           
-            const task = e.target.querySelector('input').value
-            if(task!== '' && task.trim()!==''){
+            const fData = new FormData(e.target)
+            const category = fData.get('category')
+            const task = fData.get('task')
+
+            if(task!== '' && task.trim()!=='' && category){
                 const res = await axios.post(link,
                     {
                         task,
-                        category : sessionStorage.getItem('category')
+                        category
                     },
                 {withCredentials: true})
                 const data = res.data
@@ -99,6 +69,8 @@ function HomeMain(props) {
                 else{
                     e.target.querySelector('input').value = ''
                     handleReload();
+                    setActiveFilter('all')
+                    setCategoryFilter('all')
                 }
             }
             
@@ -107,120 +79,122 @@ function HomeMain(props) {
         }
     }
 
-
-    const handleSelect = (e)=>{
-        const c =  data.find(el => el['category_id'] === Number(e.target.value))?.category
-        setCategory(c)
-        sessionStorage.setItem('category',e.target.value)
-        setTasks([])
-        setDone([])
-        handleReload();
-    }
-
-    const handleBlur =async(e)=>{
-        try{    
-            const res = await axios.put(link,{
-                'editTask':e.target.innerHTML,
-                'id':e.target.getAttribute('data-key')                
-            },{withCredentials:true})
-        }catch(error){
-            console.error(error)
+    const handleFilterTasks = (done, category)=>{
+        if(done==='all'){
+            if(category === 'all'){
+                setTasks(tasks.map(e=> e?{...e,show:true} : e ))
+            }
+            else{
+                setTasks(tasks.map(e=> e.category===category?{...e,show:true} : {...e,show:false} ))
+            }
         }
+        else{
+            if(category=== 'all'){
+                setTasks(tasks.map(e=>e.done === done? {...e,show:true} : {...e,show:false}))
+            }
+            else{
+                setTasks(tasks.map(e=> e.done === done & e.category===category?{...e,show:true} : {...e,show:false} ))
+            }
+        }
+            
     }
 
-
-    const handleDelete = async(e)=>{
+    const handleDelete = async(id)=>{
         try{    
             const res = await axios.delete(link,{
                 "data":{
                     'task':true,
-                    'id':e.target.getAttribute('data-key')         
+                    'id':id        
                 }, 
                 withCredentials:true     
             })
-            setData([])
-            setTasks([])
-            handleReload()
+            if(res.data['message']){
+                res.data['message']==='ok' ? setTasks(tasks.filter(e=>e.id !== id)):
+                console.error(res.data['message'])
+            }
         }catch(error){
             console.error(error)
         }
     }
 
-    const handleCheck = async(e)=>{
+    const handleCheck = async(val,id)=>{
         try{    
             const res = await axios.put(link,{
-                'checkTask':e.target.checked,
-                'id':e.target.getAttribute('data-key')                
+                'checkTask':val,
+                id               
             },{withCredentials:true})
-            handleReload()
+            if(res.data?.message === 'ok'){
+                setTasks(tasks.map(e=>e.id === id ? {...e,done:val, show:activeFilter!=='all' ? false : true}: e))
+            }
         }catch(error){
             console.error(error)
         }
     }
 
     return (
-        <div className='container-fluid pt-4 pt-md-5'>
-            <div className='container d-flex justify-content-start align-items-start gap-5 flex-wrap'>
-                
-                <select defaultValue={'a0'} onChange={handleSelect}>
-                    <option value={'a0'} disabled>Select category</option>
-                    {data?.map((element)=>(
-                        <option  key={element['category_id']} value={element['category_id']}>
-                            {element['category']}
-                        </option>
-                    ))}  
-                </select>
+        <div className='container-fluid py-4'>
+            <Title title={'Good Morning'} text={"Here's what's on your plate today."}/>
+            <div className='container white-box d-flex flex-column gap-3'>
+                <div  className='d-flex justify-content-between gap-4 algin-items-cetner flex-wrap'>
+                    <div className='d-flex justify-content-start gap-2 algin-items-cetner flex-wrap'>
+                        <Button click_func={()=>{handleFilterTasks(activeFilter, 'all') ; setCategoryFilter('all')}}
+                            btn_style={`${categoryFilter === 'all' ? 'orange-btn': 'smoke-btn'} small_padding_btn`} text='All'/>
+                        {data.map((c)=>(
+                            <div key={c.category_id}>
+                                <Button 
+                                click_func={()=>{handleFilterTasks(activeFilter, c.category) ; setCategoryFilter(c.category)}}
+                                btn_style={`${categoryFilter === c.category ? 'orange-btn': 'smoke-btn'} small_padding_btn`} text={c.category}/>
 
+                            </div>
+                        ))}
+                    </div>
+                    <div className='d-flex justify-content-start gap-2 algin-items-cetner flex-wrap'>
+                        <Button text="All" btn_style={`${activeFilter==='all' ? 'orange-btn' : 'white-btn' }  small_padding_btn`}
+                        click_func={()=>{handleFilterTasks('all', categoryFilter); setActiveFilter('all')}}/>
+                        <Button text="Pending" btn_style={`${activeFilter===0 ? 'orange-btn' : 'white-btn' }  small_padding_btn`} 
+                        click_func={()=>{handleFilterTasks(0, categoryFilter); setActiveFilter(0)}}/>
+                        <Button text="Completed" btn_style={`${activeFilter===1 ? 'orange-btn' : 'white-btn' }  small_padding_btn`} 
+                        click_func={()=>{handleFilterTasks(1, categoryFilter); setActiveFilter(1)}}/>
 
+                    </div>
+                </div>
+                <form className='addForm pb-4' onSubmit={handleAdd}>
+                    <input type='text' name='task' minLength={2} maxLength={20} placeholder='Add a task'/>
 
-                <form className='addForm pb-4' onSubmit={handleSubmit}>
-                    <input type='text' minLength={2} maxLength={20} placeholder='Add a task'/>
+                    <select defaultValue={0}  name='category'>
+                        <option value={0} disabled>Select Category</option>
+                        {data?.map((element)=>(
+                            <option  key={element['category_id']} value={element['category_id']}>
+                                {element['category']}
+                            </option>
+                        ))}  
+                    </select>
                     <button type='submit'>
-                        <i className='fa fa-plus'></i>
+                        <i className='fa fa-plus me-2'></i>
+                        Add
                     </button>
                 </form>
-
                 
-                
-            </div>
-            <h3 className='w-100 text-center py-3 category_h3'>Category : {category}</h3>
-            <div className='container d-flex justify-content-between align-items-start flex-wrap gap-2 pt-3'>
                 <ul className='d-flex justify-content-start align-items-start flex-wrap gap-3 tasks'>
-                    <li>
-                        <h3 className='w-100 text-center task_header'>Tasks</h3>
-                    </li>
-                    {tasks.map((task)=>(
+                    {tasks.filter(task=>task.show !== false)
+                    .map((task)=>(
                         <li key={task['id']}>
                             <div className='task_div'>
-                                <input type='checkbox' data-key={task['id']} onChange={handleCheck}/>
-                                <h3 data-key={task['id']} className='text_task'  onBlur={handleBlur}>{task['task']}</h3>
-                                
-                                <div data-opt={task['id']} className='task_opt'>
-                                    <i className='fa fa-ellipsis-h task-moreOpt' data-count='1' data-key={task['id']} onClick={handleMoreOpt}></i>
-                                    <i className="fa fa-trash" aria-hidden="true" data-key={task['id']} onClick={handleDelete}></i>
-                                    <i className="fa fa-pencil-square-o" onClick={handleEdit} data-key={task['id']} data-edit='0' aria-hidden="true"></i>
+                                <div className='d-flex justify-content-start align-items-center'>
+                                    <input type='checkbox' data-key={task['id']} checked={task['done']} 
+                                    onChange={(e)=>handleCheck(e.target.checked,task.id)}/>
+                                    <h3 data-key={task['id']} className='text_task'>{task['task']}</h3>
+                                </div>
+
+                                <div className='d-flex justify-content-start gap-3'>
+                                    <Badge bClass={'red-badge1'} text={task.category}/>
+                                    <i className='fa fa-trash'  onClick={()=>handleDelete(task['id'])}></i>
                                 </div>
                             </div>
                         </li>
                     ))}
                     
                 </ul>
-
-                <div className='d-flex justify-content-start align-items-center flex-column gap-4 ended-tasks'>
-                    <h3 className='task_header text-center'>Done 
-                        <i className='fa fa-check'></i>
-                    </h3>
-                    {
-                        done.map((element)=>(
-                            <div key={element['id']} className='task_div'>
-                                <input type='checkbox' checked data-key={element['id']} onChange={handleCheck}/>
-                                <h3 data-key={element['id']} className='text_task'>{element['task']}</h3>
-                            </div>
-                        ))
-                    }
-                    
-                </div>
-               
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { getAppConfig } from '../config';
+import Title from './Title';
 
 function PendingTasksMain(props) {
     const [name,setName] = useState('');
@@ -89,7 +90,8 @@ function PendingTasksMain(props) {
     }
 
     return (
-        <div className='container-fluid pb-5 team_cont'>
+        <div className='container-fluid team_cont py-4'>
+            <Title title={"My Tasks"} text={"Tasks assigned to you across all projects."}/>
             <div className='container d-flex justify-content-start align-items-start flex-column gap-4'>
                 <div className='d-flex justify-content-between align-items-start gap-3 flex-column'>
            

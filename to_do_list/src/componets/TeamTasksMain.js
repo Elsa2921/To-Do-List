@@ -13,7 +13,6 @@ function TeamTasksMain(props) {
     const [name, setName] = useState('');
     const [id,setId] = useState(0);
     const [tasks,setTasks] = useState([]);
-    const [doneT,setDoneT] = useState([]);
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
         handleReload()
@@ -92,10 +91,7 @@ function TeamTasksMain(props) {
     const projectSelectorChecker = ()=>{
         const s=  document.getElementById('select_team')
         const option = s.selectedOptions[0]
-        if(option.disabled){
-            alert('select a project');
-        }
-        else{
+        if(!option.disabled){
             return option.value
         }
     }
@@ -158,7 +154,7 @@ function TeamTasksMain(props) {
     }
 
     return (
-        <div className='container-fluid pb-5'>
+        <div className='container-fluid  py-4'>
             <Title title='Team Tasks' text='Assign and track tasks across projects'/>
             <div className='container d-flex justify-content-start align-items-start flex-column gap-4'>
                 <div className='w-100 d-flex justify-content-between align-items-end gap-4 flex-wrap pt-4'>

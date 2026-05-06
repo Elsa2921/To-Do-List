@@ -100,7 +100,14 @@
     background-color: var(--smoke);
     border-color: #ccc;
     color: var(--black);
-    font-size: clamp(14px ,1vw ,16px);
+    /* font-size: clamp(14px ,1vw ,16px); */
+}
+
+.white-btn{
+    background-color: var(--white);
+    border-color: #ccc;
+    color: var(--black);
+    /* font-size: clamp(14px ,1vw ,16px); */
 }
 
 
@@ -108,12 +115,14 @@
     background-color: rgba(220,38,110,.2);
     color: var(--pink);
     border-color: var(--pink);
-    font-size: clamp(14px ,1vw ,16px);
+    /* font-size: clamp(14px ,1vw ,16px); */
     white-space: normal;
     word-break: break-word;
 }
 
-
+.small_padding_btn{
+    padding: 5px 10px;
+}
 
 /* fonts */
 

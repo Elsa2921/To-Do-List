@@ -1,10 +1,8 @@
 import React from 'react';
 
-function Button(props) {
+function Button({btn_style,click_func,text}) {
     return (
-        <div>
-            
-        </div>
+        <button className={btn_style ? btn_style : ''} onClick={click_func}>{text}</button>
     );
 }
 

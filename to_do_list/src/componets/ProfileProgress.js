@@ -170,7 +170,7 @@ function ProfileProgress(props) {
 
 
     return (
-        <div className='container-fluid pb-5'>
+        <div className='container-fluid py-4'>
             <Title title='Profile'/>
             <div className='container profile-container'>
                 <div className='d-flex profile-detail-box justify-content-start align-items-center flex-column gap-3 white-box'>
