@@ -5,12 +5,18 @@ import Title from './Title';
 import Badge from './Badge';
 
 import Button from './Button';
+import TaskInfoBox from './TaskInfoBox';
 function HomeMain(props) {
     const [category,setCategory] = useState(null); 
     const [data,setData] = useState([]);
     const [tasks,setTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState('all');
     const [categoryFilter, setCategoryFilter] = useState('all');
+
+    const [pendingTasks, setPendingTasks] = useState(0)
+    const [completedTasks,setCompletedTasks] = useState(0)
+    const [totalTaks,setTotalTasks] = useState(0)
+    const [totalCategories,setTotalCategories]=  useState(0)
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
         handleReload();
@@ -29,7 +35,8 @@ function HomeMain(props) {
             })
             if(res.data['tasks']){
                 setTasks(res.data['tasks'])
-                console.log(res.data['tasks'])
+                handleTotals(res.data['tasks'])
+
             }
             if(res.data['categories'] && res.data['categories'].length !== 0){
                 let c= res.data['categories']
@@ -39,6 +46,8 @@ function HomeMain(props) {
                     sessionStorage.setItem('category',c[0]['category_id'])
                 }
                 setData(c)
+                setTotalCategories(c.length)
+
             }
             
         }catch(error){
@@ -46,7 +55,13 @@ function HomeMain(props) {
         }
     }
 
-
+    
+    const handleTotals =(tasks) =>{
+        setTotalTasks(tasks.length)
+        let completed = tasks.filter(e=>e.done===1).length
+        setCompletedTasks(completed)
+        setPendingTasks(tasks.length-completed)        
+    }
 
     const handleAdd = async (e)=>{
         e.preventDefault()
@@ -109,7 +124,11 @@ function HomeMain(props) {
                 withCredentials:true     
             })
             if(res.data['message']){
-                res.data['message']==='ok' ? setTasks(tasks.filter(e=>e.id !== id)):
+                if(res.data['message']==='ok'){
+                    const updatedTasks = tasks.filter(e=>e.id !== id)
+                    setTasks(updatedTasks)
+                    handleTotals(updatedTasks)
+                }
                 console.error(res.data['message'])
             }
         }catch(error){
@@ -124,7 +143,11 @@ function HomeMain(props) {
                 id               
             },{withCredentials:true})
             if(res.data?.message === 'ok'){
-                setTasks(tasks.map(e=>e.id === id ? {...e,done:val, show:activeFilter!=='all' ? false : true}: e))
+                const check = val ? 1: 0
+                const updatedTasks = tasks.map(e=>e.id === id ? {...e,done:check, show:activeFilter!=='all' ? false : true}: e)
+                setTasks(updatedTasks)
+                handleTotals(updatedTasks)
+                
             }
         }catch(error){
             console.error(error)
@@ -134,6 +157,13 @@ function HomeMain(props) {
     return (
         <div className='container-fluid py-4'>
             <Title title={'Good Morning'} text={"Here's what's on your plate today."}/>
+            <div className='container p-0 pb-5 d-flex justify-content-between '>
+                <TaskInfoBox text='Total Tasks' num={totalTaks} icons={'fa fa-list text-orange'}/>
+                <TaskInfoBox text='Completed' num={completedTasks} icons={'fa text-green fa-check-square-o'}/>
+                <TaskInfoBox text='Pending' num={pendingTasks} icons={'fa text-yellow fa-clock-o'}/>
+                <TaskInfoBox text='Categories' num={totalCategories} icons={'fa text-blue fa-tag'}/>
+
+            </div>
             <div className='container white-box d-flex flex-column gap-3'>
                 <div  className='d-flex justify-content-between gap-4 algin-items-cetner flex-wrap'>
                     <div className='d-flex justify-content-start gap-2 algin-items-cetner flex-wrap'>

@@ -4,6 +4,7 @@ import { getAppConfig } from '../config';
 import Title from './Title';
 function CategoriesMain(props) {
     const [data,setData] = useState([]);
+    const [newCategory,setNewCategory] = useState('')
     const link = getAppConfig().REACT_APP_API_URI
     useEffect(()=>{
         getInfo();
@@ -55,18 +56,18 @@ function CategoriesMain(props) {
         e.preventDefault()
 
         try{
-            const category = document.getElementById('category_input').value;
+            const category = newCategory
             if(category !== '' && category.trim()!==''){
                 const res = await axios.post(link,
                     {'addCategory':category},
                     {withCredentials:true});
-                const data =  res.data;
-                if(data['error']){
-                    alert(data['error'])
+                const data1 =  res.data;
+                if(data1['error']){
+                    alert(data1['error'])
                 }
                 else{
-                    document.getElementById('category_input').value=''
-                    getInfo();
+                    setNewCategory('')
+                    setData([...data,...data1])
                 }
             }
             
@@ -80,7 +81,7 @@ function CategoriesMain(props) {
             <Title title="Categories" text='Organize your tasks by category.'/>
             
             <form onSubmit={handleSubmit} className='container add_category d-flex justify-content-start align-items-start gap-4 pb-5'>
-                <input type='text' maxLength={20} className='w-100' id='category_input' placeholder='Add a category'/>
+                <input onChange={(e)=>setNewCategory(e.target.value)} value={newCategory} type='text' maxLength={20} className='w-100' placeholder='Add a category'/>
                 <button type='submit'><i className="fa fa-plus" aria-hidden="true"></i> Add Category</button>
             </form>
             <div className='container d-flex justify-content-start align-items-start gap-3 flex-wrap'>

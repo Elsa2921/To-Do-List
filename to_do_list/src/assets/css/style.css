@@ -9,6 +9,8 @@
     --pink: rgb(220,38,110);
     --brown: rgb(146,64,14);
     --baby-yellow: rgb(254,243,199);
+    --yellow: rgb(233,196,106);
+    --blue: rgb(50, 88, 111);
 }
 
 
@@ -71,7 +73,14 @@
 .text-red{
     color: var(--pink);
 }
+.text-yellow{
+    color: var(--yellow);
+}
 
+
+.text-blue{
+    color: var(--blue);
+}
 
 .gray-small{
     color: #a5a4a4;
@@ -329,6 +338,11 @@ input::placeholder{
 }
 
 
+
+.task-info-box{
+    width: 24%;
+    padding: 15px;
+}
 @media(max-width:768px){
     .sideBar{
         
